@@ -20,6 +20,7 @@
 }
 
 .chatListItem--lines {
+    height: 100%;
     flex: 1;
     display:flex;
     flex-direction: column;
@@ -28,6 +29,12 @@
     padding-right: 15px;
     margin-left: 15px;
 
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.chatListItem:hover{
+    background-color: #f5f5f5;
 }
 
 .chatListItem--line {
@@ -38,6 +45,7 @@
 }
 
 .chatListItem--name {
+    padding-top: 15px;
     font-size: 17px;
     color: black;
 }
@@ -52,5 +60,11 @@
     color: #999;
     display: flex;
     width: 100%;
-    padding-bottom: 10px;
+}
+
+.chatListItem--lastMsg p{
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0;
 }
