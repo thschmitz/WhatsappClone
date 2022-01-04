@@ -99,4 +99,8 @@
 
 }
 
-.chatWindow
+aside.emoji-picker-react{
+    width: 100%;
+    background: none;
+}
+
