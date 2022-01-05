@@ -15,6 +15,7 @@
     display:flex;
     flex-direction: column;
     border-right: 1px solid #DDD;
+    transition: all ease 0.5s;
 }
 
 .newChat--head{
@@ -55,4 +56,27 @@
   
 .newChat--list::-webkit-scrollbar-thumb{
     background-color: rgba(0,0,0,0.2)
+}
+
+.newChat--item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor:pointer;
+}
+
+.newChat--item:hover{
+    background-color: #f5f5f5;
+}
+
+.newChat--itemavatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.newChat--itemname {
+    font-size: 17px;
+    color: #000;
 }
