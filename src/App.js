@@ -19,12 +19,12 @@ export default () => {
 ])
   const [activeChat, setActiveChat] = useState({});
   const [user, setUser] = useState({id: 1234, avatar: "https://www.w3schools.com/howto/img_avatar.png", name:"Thomas Schmitz"});
-
+  const [showNewChat, setShowNewChat] = useState(false)
   return(
     <div className="app-window">
       <div className="sidebar">
 
-        <NewChat />
+        <NewChat chatlist={chatlist} user={user} show={showNewChat} setShow={setShowNewChat} />
         <header>
           <img className="header--avatar" src={user.avatar} alt="" />
           <div className="header--buttons">
