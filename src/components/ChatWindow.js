@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import "./ChatWindow.css";
 import SearchIcon from "@material-ui/icons/Search"
 import AttachFileIcon from "@material-ui/icons/AttachFile"
@@ -10,7 +10,9 @@ import MicIcon from "@material-ui/icons/Mic"
 import EmojiPicker from "emoji-picker-react"
 import MessageItem from "./MessageItem"
 
-export default () => {
+export default ({user}) => {
+
+    const body = useRef()
 
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -22,7 +24,7 @@ export default () => {
     const [emojiOpen, setEmojiOpen] = useState(false)
     const [text, setText] = useState("")
     const [listening, setListening] = useState(false)
-    const [list, setList] = useState([{}, {}, {}])
+    const [list, setList] = useState([{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},])
 
     const handleMicClick = () => {
         if(recognition !== null){
@@ -43,6 +45,12 @@ export default () => {
             alert("O botao nao esta funcionando devido ao navegador usado")
         }
     }
+
+    useEffect(() => {
+        if(body.current.scrollHeight > body.current.offsetHeight){
+            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
+        }
+    }, [list])
 
     const handleSendClick = () => {
 
@@ -81,9 +89,9 @@ export default () => {
                 </div>
 
             </div>
-            <div className="chatWindow--body">
+            <div ref={body} className="chatWindow--body">
                 {list.map((item, key) => (
-                    <MessageItem key={key} data={item} />
+                    <MessageItem key={key} data={item} user={user} />
                 ))}
             </div>
 

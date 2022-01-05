@@ -7,6 +7,7 @@ import SearchIcon from "@material-ui/icons/Search"
 import ChatIntro from "./components/ChatIntro"
 import ChatListItem from "./components/ChatListItem"
 import ChatWindow from "./components/ChatWindow"
+import NewChat from "./components/NewChat"
 
 export default () => {
 
@@ -17,13 +18,15 @@ export default () => {
     {chatId: 4, title: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar.png"}
 ])
   const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] = useState({id: 1234, avatar: "https://www.w3schools.com/howto/img_avatar.png", name:"Thomas Schmitz"});
 
   return(
     <div className="app-window">
       <div className="sidebar">
 
+        <NewChat />
         <header>
-          <img className="header--avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="" />
+          <img className="header--avatar" src={user.avatar} alt="" />
           <div className="header--buttons">
             <div className="header--btn">
               <DonutLargeIcon style={{color: "#919191"}} />
@@ -55,7 +58,7 @@ export default () => {
       <div className="contentarea">
 
         {activeChat.chatId !== undefined &&
-          <ChatWindow />
+          <ChatWindow user={user}/>
         }
 
         {activeChat.chatId === undefined && 
