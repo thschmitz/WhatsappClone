@@ -9,8 +9,9 @@ import SendIcon from "@material-ui/icons/Send"
 import MicIcon from "@material-ui/icons/Mic"
 import EmojiPicker from "emoji-picker-react"
 import MessageItem from "./MessageItem"
+import Api from "../Api"
 
-export default ({user}) => {
+export default ({user, data}) => {
 
     const body = useRef()
 
@@ -24,7 +25,7 @@ export default ({user}) => {
     const [emojiOpen, setEmojiOpen] = useState(false)
     const [text, setText] = useState("")
     const [listening, setListening] = useState(false)
-    const [list, setList] = useState([{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},{author: 123, body: "bla bla bla bla"}, {author: 1234, body:"bla bla bla"}, {author: 123, body:"bla"},])
+    const [list, setList] = useState([])
 
     const handleMicClick = () => {
         if(recognition !== null){
@@ -47,14 +48,18 @@ export default ({user}) => {
     }
 
     useEffect(() => {
+        setList([]);
+        let unsub = Api.onChatContent(data.chatId, setList)
+        return unsub
+    }, [data.chatId])
+
+    useEffect(() => {
         if(body.current.scrollHeight > body.current.offsetHeight){
             body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
         }
     }, [list])
 
-    const handleSendClick = () => {
 
-    }
 
     const handleEmojiClick = (e, emojiObject) => {
         setText( text + emojiObject.emoji)
@@ -62,6 +67,16 @@ export default ({user}) => {
 
     const handleOpenEmoji = () => {
         setEmojiOpen(true)
+    }
+
+    const handleInputKeyUp = (e) => {
+        if(e.keyCode == 13) {
+            handleSendClick();
+        }
+    }
+
+    const handleSendClick = () => {
+        
     }
 
     const handleCloseEmoji = () => {
@@ -72,8 +87,8 @@ export default ({user}) => {
         <div className="chatWindow">
             <div className="chatWindow--header">
                 <div className="chatWindow--headerinfo">
-                    <img className="chatWindow--avatar" src="https://www.w3schools.com/howto/img_avatar.png" alt="" />
-                    <div className="chatWindow--name">Thomas Schmitz</div>
+                    <img className="chatWindow--avatar" src={data.image} alt="" />
+                    <div className="chatWindow--name">{data.title} - {data.chatId}</div>
                 </div>
 
                 <div className="chatWindow--headerbuttons">
@@ -109,7 +124,7 @@ export default ({user}) => {
                     </div>
                 </div>
                 <div className="chatWindow--inputarea">
-                    <input className="chatWindow--input" value={text} onChange={e=>setText(e.target.value)} type="text" placeholder="Digite uma mensagem" />
+                    <input className="chatWindow--input" value={text} onKeyUp={handleInputKeyUp} onChange={e=>setText(e.target.value)} type="text" placeholder="Digite uma mensagem" />
                 </div>
                 <div className="chatWindow--pos">
 
