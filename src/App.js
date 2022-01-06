@@ -9,6 +9,7 @@ import ChatListItem from "./components/ChatListItem"
 import ChatWindow from "./components/ChatWindow"
 import NewChat from "./components/NewChat"
 import Login from "./components/Login"
+import Api from './Api';
 
 export default () => {
 
@@ -16,15 +17,21 @@ export default () => {
     setShowNewChat(true)
   }
 
-  const [chatList, setChatList] = useState([
-    {chatId: 1, title: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar.png"},
-    {chatId: 2, title: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar.png"},
-    {chatId: 3, title: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar.png"},
-    {chatId: 4, title: "Fulano de tal", avatar: "https://www.w3schools.com/howto/img_avatar.png"}
-])
+  const [chatList, setChatList] = useState([])
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState({
+    id: "zEFLuebRixTroxbObdr2CYYJr4L2",
+    name: "Thomas Henrique Schmitz", // TEMPORARIO, SO PRA NAO PRECISAR LOGAR TODA HORA
+    avatar: "https://graph.facebook.com/2157147657772089/picture",
+  }); 
   const [showNewChat, setShowNewChat] = useState(false)
+
+  useEffect(() => {
+    if(user !== null){
+      let unsub = Api.onChatList(user.id, setChatList)
+      return unsub;
+    }
+  }, [user])
 
   const handleLoginData = async (u) => {
     let newUser = {
@@ -32,7 +39,7 @@ export default () => {
       name: u.displayName,
       avatar: u.photoURL
     };
-
+    await Api.addUser(newUser)
     setUser(newUser); 
   }
 
@@ -51,7 +58,7 @@ export default () => {
             <div className="header--btn">
               <DonutLargeIcon style={{color: "#919191"}} />
             </div>
-            <div onClick={handleNewChat}className="header--btn">
+            <div onClick={handleNewChat} className="header--btn">
               <ChatIcon style={{color: "#919191"}} />
             </div>
             <div className="header--btn">
@@ -78,7 +85,7 @@ export default () => {
       <div className="contentarea">
 
         {activeChat.chatId !== undefined &&
-          <ChatWindow user={user}/>
+          <ChatWindow user={user} data={activeChat}/>
         }
 
         {activeChat.chatId === undefined && 
