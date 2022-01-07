@@ -104,7 +104,7 @@ export default {
                 for (let e in chats){
                     if(chatData[e].chatId == chatData.chatId){
                         chats[e].lastMessage = body;
-                        chats[e].lasMessageDate = now;
+                        chats[e].lastMessageDate = now;
                     }
                 }
                 await db.collection("users").doc(users[i]).update({

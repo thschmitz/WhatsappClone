@@ -70,6 +70,11 @@ export default ({user, data}) => {
         setEmojiOpen(true)
     }
 
+    const handleCloseEmoji = () => {
+        setEmojiOpen(false)
+    }
+
+
     const handleInputKeyUp = (e) => {
         if(e.keyCode == 13) {
             handleSendClick();
@@ -84,9 +89,6 @@ export default ({user, data}) => {
         }
     }
 
-    const handleCloseEmoji = () => {
-        setEmojiOpen(false)
-    }
 
     return(
         <div className="chatWindow">
