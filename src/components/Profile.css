@@ -4,6 +4,48 @@
     box-sizing: border-box;
 }
 
-.profile{
-    width: 415px;
+
+.profile--headtitle{
+    padding: 20px 150px;
+    font-weight: bold;
+}
+
+.profile--backbutton{
+    padding: 16px;
+    cursor:pointer;
+    border-bottom: 1px solid #ccc;
+}
+
+.image img{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.image{
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.profile--backbutton{
+    display:flex;
+}
+
+.profile--backbutton h3{
+    display:flex;
+    align-items: center;
+    color: #919191;
+    margin-bottom: 4px;
+    padding-left: 10px;
+}
+
+.name h3{
+    font-weight: normal;
+    padding: 10px;
+}
+
+.id h3{
+    font-weight: normal;
+    padding: 10px;
 }

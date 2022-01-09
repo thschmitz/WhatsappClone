@@ -92,7 +92,7 @@ export default () => {
       </div>
         {
           (showProfile)?
-          <Profile setShow={setShowProfile}/>
+          <Profile setShow={setShowProfile} data={activeChat} user={user}/>
           :
           ""
         }
