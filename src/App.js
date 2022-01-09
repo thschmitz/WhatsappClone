@@ -10,6 +10,7 @@ import ChatWindow from "./components/ChatWindow"
 import NewChat from "./components/NewChat"
 import Login from "./components/Login"
 import Api from './Api';
+import Profile from "./components/Profile"
 
 export default () => {
 
@@ -21,6 +22,7 @@ export default () => {
   const [activeChat, setActiveChat] = useState({});
   const [user, setUser] = useState(null); 
   const [showNewChat, setShowNewChat] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
 
   useEffect(() => {
     if(user !== null){
@@ -81,13 +83,19 @@ export default () => {
       <div className="contentarea">
 
         {activeChat.chatId !== undefined &&
-          <ChatWindow user={user} data={activeChat}/>
+          <ChatWindow setShow={setShowProfile} user={user} data={activeChat}/>
         }
 
         {activeChat.chatId === undefined && 
           <ChatIntro/>        
         }
       </div>
+        {
+          (showProfile)?
+          <Profile setShow={setShowProfile}/>
+          :
+          ""
+        }
 
     </div>
   )

@@ -1,9 +1,15 @@
 import React from 'react';
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 
 
-export default () => {
+export default ({show, setShow}) => {
+
+    const handleClose = () => {
+        setShow(false)
+    }
+
     return(
-        <div className="profile" style={{left: show? 0:-415}}>
+        <div className="profile">
             <div className="profile--head">
                 <div onClick={handleClose} className="profile--backbutton">
                     <ArrowBackIcon style={{color: "#FFF" }}/>

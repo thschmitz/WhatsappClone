@@ -11,7 +11,7 @@ import EmojiPicker from "emoji-picker-react"
 import MessageItem from "./MessageItem"
 import Api from "../Api"
 
-export default ({user, data}) => {
+export default ({user, data, setShow}) => {
 
     const body = useRef()
 
@@ -27,6 +27,7 @@ export default ({user, data}) => {
     const [listening, setListening] = useState(false)
     const [list, setList] = useState([])
     const [users, setUsers] = useState([])
+
 
     const handleMicClick = () => {
         if(recognition !== null){
@@ -90,7 +91,7 @@ export default ({user, data}) => {
     }
 
     const handleProfileOpen = () => {
-        
+        setShow(true)
     }
 
 
@@ -98,7 +99,7 @@ export default ({user, data}) => {
         <div className="chatWindow">
             <div className="chatWindow--header">
                 <div className="chatWindow--headerinfo">
-                    <img ohnClick={handleProfileOpen} className="chatWindow--avatar" src={data.image} alt="" />
+                    <img onClick={handleProfileOpen} className="chatWindow--avatar" src={data.image} alt="" />
                     <div className="chatWindow--name">{data.title}</div>
                 </div>
 
@@ -119,6 +120,7 @@ export default ({user, data}) => {
                 {list.map((item, key) => (
                     <MessageItem key={key} data={item} user={user} />
                 ))}
+
             </div>
 
             <div className="chatWindow--emojiarea" style={{height: emojiOpen ? "200px": "0px"}}>
@@ -151,6 +153,10 @@ export default ({user, data}) => {
                     }
                 </div>
             </div>
+
         </div>
+
+
+        
     )
 }
