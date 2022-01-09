@@ -100,7 +100,7 @@ export default ({user, data, setShow}) => {
             <div className="chatWindow--header">
                 <div className="chatWindow--headerinfo">
                     <img onClick={handleProfileOpen} className="chatWindow--avatar" src={data.image} alt="" />
-                    <div className="chatWindow--name">{data.title}</div>
+                    <div onClick={handleProfileOpen} className="chatWindow--name">{data.title}</div>
                 </div>
 
                 <div className="chatWindow--headerbuttons">
