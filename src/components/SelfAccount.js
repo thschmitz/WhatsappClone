@@ -48,6 +48,11 @@ export default ({ user, show, setShow, data}) => {
                     <div className="criado">
                         <h3>Criado em: <b>{user.criado}</b></h3>
                     </div>
+                    <div className="recado">
+                        <h3>Digite um recado:</h3>
+                        <input type="text" placeholder="Todos poderao ver seu recado" />
+                        <input type="submit" value="Aplicar" />
+                    </div>
 
                 </div>
             </div>

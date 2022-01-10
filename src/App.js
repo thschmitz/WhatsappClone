@@ -30,8 +30,10 @@ export default () => {
       name: u.displayName,
       avatar: u.photoURL,
       email: u.email,
-      criado: u.metadata.creationTime
+      criado: u.metadata.creationTime,
+      recado: u.recado
     };
+    console.log(u)
     await Api.addUser(newUser)
     setUser(newUser); 
   }
