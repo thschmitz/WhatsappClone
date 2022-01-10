@@ -95,3 +95,16 @@ header{
 .contentarea{
   flex: 1;
 }
+
+.menu--btn p{
+  padding: 20px;
+  cursor:pointer;
+}
+
+.header--btn a{
+  border-radius: 45%;
+}
+
+.header--btn a:hover{
+  border-bottom: 2px solid #ccc;
+}

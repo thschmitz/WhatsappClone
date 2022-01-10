@@ -19,7 +19,8 @@ export default {
     addUser: async(u) => {
         await db.collection("users").doc(u.id).set({
             name: u.name,
-            avatar: u.avatar,
+            avatar: u.photoURL,
+            email: u.email,
         }, {merge: true})
     },
 

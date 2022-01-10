@@ -1,0 +1,74 @@
+*{
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.selfAccount{
+    width: 35%;
+    max-width: 415px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #FFF;
+    display:flex;
+    flex-direction: column;
+    border-right: 1px solid #DDD;
+    transition: all ease 0.5s;
+}
+
+.selfAccount a{
+    cursor:pointer;
+    padding: 10px;
+}
+
+.profile{
+    border-left: 1px solid #ccc;
+}
+
+.profile--headtitle{
+    padding: 20px 150px;
+    font-weight: bold;
+}
+
+.profile--backbutton{
+    padding: 16px;
+    cursor:pointer;
+    border-bottom: 1px solid #ccc;
+}
+
+.image img{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.image{
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.profile--backbutton{
+    display:flex;
+}
+
+.profile--backbutton h3{
+    display:flex;
+    align-items: center;
+    color: #919191;
+    margin-bottom: 4px;
+    padding-left: 10px;
+}
+
+.informations h3{
+    font-weight: normal;
+    padding: 10px;
+}
+
+.contatos h2{
+    padding: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+}
