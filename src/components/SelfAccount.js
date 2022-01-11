@@ -27,6 +27,7 @@ export default ({ user, show, setShow, data}) => {
         db.collection("users").doc(user.id).set({
             recado: message
         }, {merge: true})
+        document.getElementById("campoRecado").value = ""
     }
 
     db.collection("users").doc(user.id).onSnapshot(function(doc){

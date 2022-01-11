@@ -6,6 +6,7 @@
 
 .profile{
     border-left: 1px solid #ccc;
+    max-width: 415px;
 }
 
 .profile--headtitle{

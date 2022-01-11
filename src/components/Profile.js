@@ -3,8 +3,18 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import "./Profile.css"
 import Api from '../Api';
 import ChatListItem from "./ChatListItem"
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
+
+import firebaseConfig from "../firebaseConfig"
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore();
 
 export default ({show, setShow, data, user}) => {
+
+    const [recado, setRecado] = useState()
 
     const handleClose = () => {
         setShow(false)
@@ -19,6 +29,12 @@ export default ({show, setShow, data, user}) => {
         }
       }, [user])
 
+    db.collection("users").doc(data.with).onSnapshot(function(doc){
+        const data = doc.data()
+        const recado = data.recado
+        setRecado(recado)
+    })
+
     return(
         <div className="profile">
             <div className="profile--head">
@@ -31,6 +47,7 @@ export default ({show, setShow, data, user}) => {
                 <div className="informations">
                     <div className="image">
                         <img src={data.image} />
+                        <h3>{recado}</h3>
                     </div>
                     <div className="name">
                         <h3>Nome: <b>{data.title}</b></h3>
