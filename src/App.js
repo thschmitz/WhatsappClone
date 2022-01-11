@@ -13,6 +13,7 @@ import Api from './Api';
 import Profile from "./components/Profile"
 import Popover from "@material-ui/core/Popover"
 import SelfAccount from "./components/SelfAccount"
+import Recado from "./components/Recado"
 
 export default () => {
   const [chatList, setChatList] = useState([])
@@ -22,6 +23,7 @@ export default () => {
   const [showProfile, setShowProfile] = useState(false)
   const [showBars, setShowBars] = useState(false)
   const [showSelfAccount, setShowSelfAccount] = useState(false)
+  const [showRecado, setShowRecado] = useState(false)
   const ref = useRef(null)
 
   const handleLoginData = async (u) => {
@@ -70,6 +72,10 @@ export default () => {
     setShowSelfAccount(true)
   }
 
+  const handleOpenRecado = () => {
+    setShowRecado(true)
+  }
+
 
   return(
     <div className="app-window">
@@ -77,11 +83,12 @@ export default () => {
 
         <NewChat chatlist={chatList} user={user} show={showNewChat} setShow={setShowNewChat} />
         <SelfAccount user={user} data={activeChat} user={user} show={showSelfAccount} setShow={setShowSelfAccount}/>
+        <Recado user={user} data={activeChat} show={showRecado} setShow={setShowRecado} />
         <header>
           <img className="header--avatar" onClick={handleOpenSelfAccount} src={user.avatar} alt="" />
           <div className="header--buttons">
             <div className="header--btn">
-              <a><DonutLargeIcon style={{color: "#919191"}} /></a>
+              <a><DonutLargeIcon onClick={handleOpenRecado} style={{color: "#919191"}} /></a>
             </div>
             <div onClick={handleNewChat} className="header--btn">
               <a><ChatIcon style={{color: "#919191"}} /></a>
