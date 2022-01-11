@@ -1,28 +1,40 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import "./SelfAccount.css"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import Api from "../Api"
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
+
+import firebaseConfig from "../firebaseConfig"
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore();
+
+
+
 
 export default ({ user, show, setShow, data}) => {
 
-    const [list, setList] = useState([])
-
-    useEffect(() => {
-        const getList = async() => {
-            if(user !== null){
-                let results = await Api.getContactList(user.id)
-                setList(results)
-            }
-        }
-
-        getList();
-    }, [user])
-
+    const [recado, setRecado] = useState()
 
     const handleClose = () => {
         setShow(false)
     }
-    console.log(user)
+
+    const handleRecadoClick = () => {
+        const message = document.getElementById("campoRecado").value
+        db.collection("users").doc(user.id).set({
+            recado: message
+        }, {merge: true})
+    }
+
+    db.collection("users").doc(user.id).onSnapshot(function(doc){
+        const data = doc.data()
+        const recado = data.recado
+        setRecado(recado)
+    })
+
     return(
         <div className="selfAccount" style={{left: show? 0:-415}}>
             <div className="profile--head">
@@ -35,6 +47,7 @@ export default ({ user, show, setShow, data}) => {
                 <div className="informations">
                     <div className="image">
                         <img src={user.avatar} />
+                        <h3>{recado}</h3>
                     </div>
                     <div className="name">
                         <h3>Nome: <b>{user.name}</b></h3>
@@ -50,8 +63,10 @@ export default ({ user, show, setShow, data}) => {
                     </div>
                     <div className="recado">
                         <h3>Digite um recado:</h3>
-                        <input type="text" placeholder="Todos poderao ver seu recado" />
-                        <input type="submit" value="Aplicar" />
+                        <input id="campoRecado" className="campoRecado" type="text" placeholder="Todos poderao ver seu recado" />
+                        <div className="buttonRecado">
+                            <button onClick={handleRecadoClick} className="botaoRecado">Aplicar</button>
+                        </div>
                     </div>
 
                 </div>
@@ -59,3 +74,5 @@ export default ({ user, show, setShow, data}) => {
         </div>
     )
 }
+
+

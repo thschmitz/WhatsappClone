@@ -73,3 +73,25 @@
     border-bottom: 1px solid #ccc;
 }
 
+.recado input{
+    margin-left: 10px;
+    padding: 5px;
+    display:flex;
+    flex: 1;
+    width: 90%;
+    margin-right: 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.recado button{
+    display:flex;
+    padding: 10px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.recado{
+    border-top: 1px solid #919191;
+    margin-top: 30px;
+}
