@@ -26,6 +26,8 @@ export default () => {
   const [showRecado, setShowRecado] = useState(false)
   const ref = useRef(null)
 
+  console.log(chatList)
+
   const handleLoginData = async (u) => {
     let newUser = {
       id: u.uid,
@@ -121,7 +123,7 @@ export default () => {
 
         <div className="chatlist">
           {chatList.map((item, key) => (
-            <ChatListItem key={key} data={item} active={activeChat.chatId === chatList[key].chatId} onClick={()=>setActiveChat(chatList[key])}/>
+            <ChatListItem user={user} key={key} data={item} active={activeChat.chatId === chatList[key].chatId} onClick={()=>setActiveChat(chatList[key])}/>
           ))}
         </div>
 

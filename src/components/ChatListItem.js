@@ -1,9 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import "./ChatListItem.css"
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
-export default ({onClick, active, data}) => {
+import firebaseConfig from "../firebaseConfig"
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore();
+
+export default ({onClick, active, data, status}) => {
 
     const [time, setTime] = useState("")
+    const [recado, setRecado] = useState()
 
     useEffect(() => {
         if(data.lastMessageDate > 0){
@@ -16,6 +25,12 @@ export default ({onClick, active, data}) => {
         }
     }, [data])
 
+    db.collection("users").doc(data.with).onSnapshot(function(doc){
+        const data = doc.data()
+        const recado = data.recado
+        setRecado(recado)
+    })
+
     return(
         <div className={`chatListItem ${active? "active": ""}`} onClick={onClick}>
             <img className="chatListItem--avatar" src={data.image} alt="" />
@@ -27,6 +42,12 @@ export default ({onClick, active, data}) => {
                 <div className="chatListItem--line">
                     <div className="chatListItem--lastMsg">
                         <p>{data.lastMessage}</p>
+                        {
+                            status?
+                            <p>{recado}</p>
+                            :
+                            ""
+                        }
                     </div>
                 </div>
             </div>

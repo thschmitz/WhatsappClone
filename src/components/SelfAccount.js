@@ -14,7 +14,7 @@ const db = firebaseApp.firestore();
 
 
 
-export default ({ user, show, setShow, data}) => {
+export default ({ user, show, setShow}) => {
 
     const [recado, setRecado] = useState()
 
@@ -35,6 +35,7 @@ export default ({ user, show, setShow, data}) => {
         const recado = data.recado
         setRecado(recado)
     })
+
 
     return(
         <div className="selfAccount" style={{left: show? 0:-415}}>
