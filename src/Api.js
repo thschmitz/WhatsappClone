@@ -22,7 +22,7 @@ export default {
             avatar: u.avatar,
             email: u.email,
         }, {merge: true})
-        console.log(u)
+        console.log(u.avatar)
     },
 
     getContactList: async(userId) => {
