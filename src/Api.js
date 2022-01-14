@@ -25,30 +25,6 @@ export default {
         console.log(u.avatar)
     },
 
-    createUser: async(email, senha, nome, setId) => {
-        const result = await auth.createUserWithEmailAndPassword(email, senha)
-        .then((authUser) => {
-            authUser.user.updateProfile({
-                displayName: nome
-            })
-
-            const id = authUser.user.uid
-
-            console.log(authUser.user)
-
-            db.collection("users").doc(id).set({
-                name: nome,
-                email: email,
-                avatar: null
-                
-            })
-            setId("123456")
-
-        })
-
-        return result
-    },
-
     getContactList: async(userId) => {
         let list = [];
         let results = await db.collection("users").get();

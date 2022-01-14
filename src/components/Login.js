@@ -5,10 +5,17 @@ import React, {useState, useEffect} from "react"
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Stepper, Step, StepLabel } from '@material-ui/core'
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
+import firebaseConfig from "../firebaseConfig"
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore();
+const auth = firebaseApp.auth()
 export default ({onReceive, setUser}) => {
     const [etapaAtual, setEtapaAtual] = useState();
-    const [id, setId] = useState();
 
 
     function funcoes(){
@@ -41,8 +48,8 @@ export default ({onReceive, setUser}) => {
     }
 
     
-    const createUser = async() => {
-
+    function createUser(e) {
+        e.preventDefault()
 
         const nome = document.getElementById("nomeCriar").value;
         const email = document.getElementById("emailCriar").value;
@@ -63,19 +70,33 @@ export default ({onReceive, setUser}) => {
     
     
     
-            let result = await Api.createUser(email, senha, nome, setId)
-            if(result){
-                console.log(result.user)
-                alert("Conta criada com sucesso")
+            auth.createUserWithEmailAndPassword(email, senha)
+            .then((authUser) => {
+                authUser.user.updateProfile({
+                    displayName: nome
+                })
+    
+                const id = authUser.user.uid
+
                 let newUser = {
-                    id: result.user.id,
+                    id: id,
                     name: nome,
                     avatar: null,
                     email: email,
                     criado: criado,
                 };
                 setUser(newUser)
-            }
+    
+                db.collection("users").doc(id).set({
+                    name: nome,
+                    email: email,
+                    avatar: null
+                    
+                })
+    
+            })
+            alert("Conta criada com sucesso")
+
 
         } else{
             alert("Todos os campos sao requeridos")
@@ -109,7 +130,7 @@ export default ({onReceive, setUser}) => {
                         <TextField id="emailCriar" label="Email" type="email" required margin="normal" fullWidth variant="outlined" autoComplete="email"/>
                         <TextField id="senhaCriar" label="Senha" type="password" required margin="normal" fullWidth variant="outlined" autoComplete="current-password" />
                         <div className="botao">
-                            <Button id="botaoCriar" onClick={createUser} type="submit" variant="contained" color="default">Criar conta</Button>
+                            <Button id="botaoCriar" onClick={(e) => createUser(e)} type="submit" variant="contained" color="default">Criar conta</Button>
                             <Button type="submit" variant="contained" onClick={(e)=>abreModalLogin(e)} color="default">Ja tem uma conta?!</Button>
                         </div>
                         
