@@ -26,7 +26,6 @@ export default () => {
   const [showRecado, setShowRecado] = useState(false)
   const ref = useRef(null)
 
-  console.log(chatList)
 
   const handleLoginData = async (u) => {
     let newUser = {
@@ -50,7 +49,7 @@ export default () => {
 
 
   if(user===null){
-    return(<Login onReceive={handleLoginData} />)
+    return(<Login onReceive={handleLoginData} setUser={setUser} />)
   }
   const handleNewChat = () => {
     setShowNewChat(true)
