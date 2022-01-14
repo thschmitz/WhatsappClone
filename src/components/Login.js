@@ -6,7 +6,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Stepper, Step, StepLabel } from '@material-ui/core'
 
-export default ({onReceive}) => {
+export default ({onReceive, setUser}) => {
     const [etapaAtual, setEtapaAtual] = useState();
     const [id, setId] = useState();
 
@@ -21,6 +21,7 @@ export default ({onReceive}) => {
         let result = await Api.fbPopup();
         if(result){
             onReceive(result.user)
+            console.log(result.user)
         } else {
             alert("Erro desconhecido")
         }
@@ -39,6 +40,50 @@ export default ({onReceive}) => {
         document.querySelector(".modalLoginConta").style.display = "none";
     }
 
+    
+    const createUser = async() => {
+
+
+        const nome = document.getElementById("nomeCriar").value;
+        const email = document.getElementById("emailCriar").value;
+        const senha = document.getElementById("senhaCriar").value;
+
+        if(nome || email || senha != ""){
+            var data = new Date();
+            var dia = String(data.getDate()).padStart(2, "0");
+            var mes = String(data.getMonth() + 1).padStart(2, "0");
+            var ano = data.getFullYear();
+            var hora = String(data.getHours())
+            var minutos = String(data.getMinutes())
+            var segundos = String(data.getSeconds())
+    
+            const criado = dia + "/" + mes + "/" + ano + " as " + hora + ":" + minutos + ":" + segundos
+    
+            console.log(criado)
+    
+    
+    
+            let result = await Api.createUser(email, senha, nome, setId)
+            if(result){
+                console.log(result.user)
+                alert("Conta criada com sucesso")
+                let newUser = {
+                    id: result.user.id,
+                    name: nome,
+                    avatar: null,
+                    email: email,
+                    criado: criado,
+                };
+                setUser(newUser)
+            }
+
+        } else{
+            alert("Todos os campos sao requeridos")
+        }
+    }
+
+
+
     return(
         <div className="login">
             <div className="telaUsuario">
@@ -53,7 +98,7 @@ export default ({onReceive}) => {
                         </Stepper>
                     </div>
                     <div className="formularioDados">
-                        <TextField id="nomeCriar" label="Nome" type="nome" InputProps={{
+                        <TextField id="nomeCriar" autoFocus required label="Nome" type="nome" InputProps={{
                             startAdornment:(
                                 <InputAdornment position="start">
                                     <AccountCircle/>
@@ -61,10 +106,10 @@ export default ({onReceive}) => {
                             ),
                         }}
                         required margin="normal" fullWidth variant="outlined"/>
-                        <TextField id="emailCriar" label="Email" type="email" required margin="normal" fullWidth variant="outlined"/>
-                        <TextField id="senhaCriar" label="Senha" type="password" required margin="normal" fullWidth variant="outlined"/>
+                        <TextField id="emailCriar" label="Email" type="email" required margin="normal" fullWidth variant="outlined" autoComplete="email"/>
+                        <TextField id="senhaCriar" label="Senha" type="password" required margin="normal" fullWidth variant="outlined" autoComplete="current-password" />
                         <div className="botao">
-                            <Button id="botaoCriar" type="submit" variant="contained" color="default">Criar conta</Button>
+                            <Button id="botaoCriar" onClick={createUser} type="submit" variant="contained" color="default">Criar conta</Button>
                             <Button type="submit" variant="contained" onClick={(e)=>abreModalLogin(e)} color="default">Ja tem uma conta?!</Button>
                         </div>
                         

@@ -6,13 +6,13 @@ import firebaseConfig from "./firebaseConfig"
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 const db = firebaseApp.firestore();
-
+const auth = firebaseApp.auth()
 
 
 export default {
     fbPopup: async() => {
         const provider = new firebase.auth.FacebookAuthProvider();
-        let result = await firebaseApp.auth().signInWithPopup(provider);
+        let result = await auth.signInWithPopup(provider);
         return result;
     },
 
@@ -23,6 +23,30 @@ export default {
             email: u.email,
         }, {merge: true})
         console.log(u.avatar)
+    },
+
+    createUser: async(email, senha, nome, setId) => {
+        const result = await auth.createUserWithEmailAndPassword(email, senha)
+        .then((authUser) => {
+            authUser.user.updateProfile({
+                displayName: nome
+            })
+
+            const id = authUser.user.uid
+
+            console.log(authUser.user)
+
+            db.collection("users").doc(id).set({
+                name: nome,
+                email: email,
+                avatar: null
+                
+            })
+            setId("123456")
+
+        })
+
+        return result
     },
 
     getContactList: async(userId) => {
