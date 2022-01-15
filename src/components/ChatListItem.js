@@ -9,7 +9,7 @@ import firebaseConfig from "../firebaseConfig"
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 const db = firebaseApp.firestore();
 
-export default ({onClick, active, data, status}) => {
+export default ({onClick, active, data, status, user}) => {
 
     const [time, setTime] = useState("")
     const [recado, setRecado] = useState()

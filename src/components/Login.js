@@ -16,7 +16,7 @@ const db = firebaseApp.firestore();
 const auth = firebaseApp.auth()
 export default ({onReceive, setUser}) => {
     const [etapaAtual, setEtapaAtual] = useState();
-
+    const [criado, setCriado] = useState()
 
     function funcoes(){
         document.querySelector(`#nomeCriar`).value = "";
@@ -47,6 +47,31 @@ export default ({onReceive, setUser}) => {
         document.querySelector(".modalLoginConta").style.display = "none";
     }
 
+    function logarUser(e) {
+        e.preventDefault();
+
+        const email = document.getElementById("emailLogin").value;
+        const senha = document.getElementById("senhaLogin").value;
+
+        auth.signInWithEmailAndPassword(email, senha)
+        .then((auth) => {
+            console.log(auth.user)
+            setEtapaAtual(2)
+            alert("Logado com sucesso")
+            console.log(criado)
+            let newUser = {
+                id: auth.user.uid,
+                name: auth.user.displayName,
+                avatar: auth.user.photoURL,
+                email: auth.user.email,
+                criado: auth.user.metadata.creationTime,
+            };
+            setUser(newUser)
+        }).catch((erro) => {
+            alert(erro.message)
+        }) 
+    }
+
     
     function createUser(e) {
         e.preventDefault()
@@ -56,19 +81,6 @@ export default ({onReceive, setUser}) => {
         const senha = document.getElementById("senhaCriar").value;
 
         if(nome || email || senha != ""){
-            var data = new Date();
-            var dia = String(data.getDate()).padStart(2, "0");
-            var mes = String(data.getMonth() + 1).padStart(2, "0");
-            var ano = data.getFullYear();
-            var hora = String(data.getHours())
-            var minutos = String(data.getMinutes())
-            var segundos = String(data.getSeconds())
-    
-            const criado = dia + "/" + mes + "/" + ano + " as " + hora + ":" + minutos + ":" + segundos
-    
-            console.log(criado)
-    
-    
     
             auth.createUserWithEmailAndPassword(email, senha)
             .then((authUser) => {
@@ -83,7 +95,7 @@ export default ({onReceive, setUser}) => {
                     name: nome,
                     avatar: null,
                     email: email,
-                    criado: criado,
+                    criado: authUser.user.metadata.creationTime,
                 };
                 setUser(newUser)
     
@@ -151,7 +163,7 @@ export default ({onReceive, setUser}) => {
                             <TextField id="senhaLogin" label="Senha" type="password" required margin="normal" fullWidth variant="outlined"/>
                             <div className="botao">
                                 <Button type="submit" onClick={(e)=>voltar(e)} variant="contained" color="default">Voltar</Button>
-                                <Button type="submit" variant="contained" color="default">Login</Button>
+                                <Button type="submit" onClick={(e) => logarUser(e) }variant="contained" color="default">Login</Button>
                             </div>
                         </div>
                 </form>
