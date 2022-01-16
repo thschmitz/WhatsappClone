@@ -13,7 +13,8 @@ import firebaseConfig from "../firebaseConfig"
 
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 const db = firebaseApp.firestore();
-const auth = firebaseApp.auth()
+const auth = firebaseApp.auth();
+
 export default ({onReceive, setUser}) => {
     const [etapaAtual, setEtapaAtual] = useState();
     const [criado, setCriado] = useState()

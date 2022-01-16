@@ -17,6 +17,8 @@ const db = firebaseApp.firestore();
 export default ({ user, show, setShow}) => {
 
     const [recado, setRecado] = useState()
+    const [selectedImage, setSelectedImage] = useState()
+    const [image, setImage] = useState("")
 
     const handleClose = () => {
         setShow(false)
@@ -36,6 +38,19 @@ export default ({ user, show, setShow}) => {
         setRecado(recado)
     })
 
+    const uploadImage = async e => {
+        e.preventDefault()
+        console.log("Upload imagem")
+        console.log(image)
+        var file = new FileReader();
+        file.onload = function(event) {
+            console.log("entrou")
+            document.getElementById("preview").src = event.target.result
+        }
+
+        console.log(file.readAsDataURL(image))
+    }
+
 
     return(
         <div className="selfAccount" style={{left: show? 0:-415}}>
@@ -48,9 +63,13 @@ export default ({ user, show, setShow}) => {
             <div className="profile--body">
                 <div className="informations">
                     <div className="image">
-                        <img src={user.avatar} />
+                        <img id="preview" src={user.avatar} />
                         <h3>{recado}</h3>
                     </div>
+                    <form className="avatar" onSubmit={uploadImage}>
+                        <input type="file" onChange={e => setImage(e.target.files[0])} className="arquivo" />
+                        <input type="submit" value="Salvar" />
+                    </form>
                     <div className="name">
                         <h3>Nome: <b>{user.name}</b></h3>
                     </div>
@@ -70,7 +89,6 @@ export default ({ user, show, setShow}) => {
                             <button onClick={handleRecadoClick} className="botaoRecado">Aplicar</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
