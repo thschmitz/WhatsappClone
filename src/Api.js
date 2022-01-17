@@ -9,7 +9,10 @@ const db = firebaseApp.firestore();
 const auth = firebaseApp.auth()
 
 
+
 export default {
+
+    
     fbPopup: async() => {
         const provider = new firebase.auth.FacebookAuthProvider();
         let result = await auth.signInWithPopup(provider);
@@ -21,7 +24,6 @@ export default {
             name: u.name,
             email: u.email,
         }, {merge: true})
-        console.log(u.avatar)
     },
 
     getContactList: async(userId) => {
@@ -41,13 +43,18 @@ export default {
         return list
     },
 
-    addNewChat: async(user, user2) => {
+    addNewChat: async(user, user2, avatar) => {
+
+
+
         let newChat = await db.collection("chats").add({
             messages: [],
             users: [user.id, user2.id]
         })
 
-        db.collection("users").doc(user2.id)
+        console.log("a")
+        console.log(user, user2)
+        console.log("a")
 
         db.collection("users").doc(user.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
@@ -57,15 +64,15 @@ export default {
                 with: user2.id
             })
         })
-
         db.collection("users").doc(user2.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 chatId: newChat.id,
                 title: user.name,
-                image: user.avatar,
+                image: avatar,
                 with: user.id
             })
         })
+
     },
     onChatList: (userId, setChatList) => {
         return db.collection("users").doc(userId).onSnapshot((doc) => {
@@ -91,7 +98,6 @@ export default {
                         }
                     })
                     setChatList(data.chats);
-                    console.log(data.chats)
                 }
             } else{
                 alert("Usuario nao existe")

@@ -40,7 +40,6 @@ export default ({ user, show, setShow, setAvatar, avatar}) => {
     const uploadImage = async e => {
         e.preventDefault()
         console.log("Upload imagem")
-        console.log(image)
         var file = new FileReader();
         file.onload = function(event) {
             console.log("entrou")
@@ -51,7 +50,7 @@ export default ({ user, show, setShow, setAvatar, avatar}) => {
             setAvatar(event.target.result)
         }
 
-        console.log(file.readAsDataURL(image))
+        file.readAsDataURL(image)
     }
 
 

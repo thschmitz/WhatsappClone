@@ -41,12 +41,12 @@ export default ({onClick, active, data, status, user}) => {
                 </div>
                 <div className="chatListItem--line">
                     <div className="chatListItem--lastMsg">
-                        <p>{data.lastMessage}</p>
                         {
                             status?
                             <p>{recado}</p>
                             :
-                            ""
+                            <p>{data.lastMessage}</p>
+
                         }
                     </div>
                 </div>

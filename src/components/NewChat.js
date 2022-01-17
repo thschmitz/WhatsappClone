@@ -2,10 +2,18 @@ import React, {useState, useEffect} from 'react';
 import "./NewChat.css"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import Api from "../Api"
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
-export default ({ user, chatList, show, setShow}) => {
+import firebaseConfig from "../firebaseConfig"
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore();
+export default ({ user, show, setShow}) => {
 
     const [list, setList] = useState([])
+    const [avatar, setAvatar] = useState()
 
     useEffect(() => {
         const getList = async() => {
@@ -15,11 +23,18 @@ export default ({ user, chatList, show, setShow}) => {
             }
         }
 
+        db.collection("users").doc(user.id).onSnapshot( async function (doc){
+            const data = doc.data()
+            const avatar = data.avatar
+            setAvatar(avatar)
+        })
+
         getList();
     }, [user])
 
     const addNewChat = async (user2) => {
-        await Api.addNewChat(user, user2);
+
+        await Api.addNewChat(user, user2, avatar);
 
         handleClose();
     }

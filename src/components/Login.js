@@ -56,10 +56,8 @@ export default ({onReceive, setUser}) => {
 
         auth.signInWithEmailAndPassword(email, senha)
         .then((auth) => {
-            console.log(auth.user)
             setEtapaAtual(2)
             alert("Logado com sucesso")
-            console.log(criado)
             let newUser = {
                 id: auth.user.uid,
                 name: auth.user.displayName,

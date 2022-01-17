@@ -31,7 +31,7 @@ export default () => {
   const [showBars, setShowBars] = useState(false)
   const [showSelfAccount, setShowSelfAccount] = useState(false)
   const [showRecado, setShowRecado] = useState(false)
-  const [avatar, setAvatar] = useState(null)
+  const [avatar, setAvatar] = useState()
   const ref = useRef(null)
 
 
