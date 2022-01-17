@@ -19,7 +19,6 @@ export default {
     addUser: async(u) => {
         await db.collection("users").doc(u.id).set({
             name: u.name,
-            avatar: u.avatar,
             email: u.email,
         }, {merge: true})
         console.log(u.avatar)
@@ -47,6 +46,9 @@ export default {
             messages: [],
             users: [user.id, user2.id]
         })
+
+        db.collection("users").doc(user2.id)
+
         db.collection("users").doc(user.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 chatId: newChat.id,
@@ -89,12 +91,14 @@ export default {
                         }
                     })
                     setChatList(data.chats);
+                    console.log(data.chats)
                 }
             } else{
                 alert("Usuario nao existe")
             }
         })
     },
+
     onChatContent:(chatId, setList, setUsers) => {
         return db.collection("chats").doc(chatId).onSnapshot((doc) => {
             if(doc.exists){
