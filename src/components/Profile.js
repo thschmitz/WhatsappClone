@@ -15,6 +15,7 @@ const db = firebaseApp.firestore();
 export default ({show, setShow, data, user}) => {
 
     const [recado, setRecado] = useState()
+    const [avatar, setAvatar] = useState()
 
     const handleClose = () => {
         setShow(false)
@@ -32,8 +33,12 @@ export default ({show, setShow, data, user}) => {
     db.collection("users").doc(data.with).onSnapshot(function(doc){
         const data = doc.data()
         const recado = data.recado
+        const avatar = data.avatar
+        setAvatar(avatar)
         setRecado(recado)
     })
+
+
 
     return(
         <div className="profile">
@@ -46,7 +51,7 @@ export default ({show, setShow, data, user}) => {
             <div className="profile--body">
                 <div className="informations">
                     <div className="image">
-                        <img src={data.image} />
+                        <img src={avatar} />
                         <h3>{recado}</h3>
                     </div>
                     <div className="name">

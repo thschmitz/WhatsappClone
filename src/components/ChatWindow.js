@@ -10,6 +10,14 @@ import MicIcon from "@material-ui/icons/Mic"
 import EmojiPicker from "emoji-picker-react"
 import MessageItem from "./MessageItem"
 import Api from "../Api"
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
+
+import firebaseConfig from "../firebaseConfig"
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore();
 
 export default ({user, data, setShow}) => {
 
@@ -59,6 +67,14 @@ export default ({user, data, setShow}) => {
         if(body.current.scrollHeight > body.current.offsetHeight){
             body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
         }
+
+        console.log(data)
+        db.collection("users").doc(data.with).onSnapshot(function(doc){
+            const data = doc.data()
+            const avatar = data.avatar
+            setAvatar(avatar)
+            console.log("data2: ", data)
+        })
 
     }, [list])
 
