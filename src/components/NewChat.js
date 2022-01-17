@@ -23,7 +23,7 @@ export default ({ user, show, setShow}) => {
             }
         }
 
-        db.collection("users").doc(user.id).onSnapshot( async function (doc){
+        db.collection("users").doc(user.id).onSnapshot( function (doc){
             const data = doc.data()
             const avatar = data.avatar
             setAvatar(avatar)

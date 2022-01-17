@@ -55,7 +55,9 @@ export default () => {
       })
       let unsub = Api.onChatList(user.id, setChatList)
       return unsub;
+
     }
+
   }, [user])
 
 

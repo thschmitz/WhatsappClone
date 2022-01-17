@@ -13,6 +13,7 @@ export default ({onClick, active, data, status, user}) => {
 
     const [time, setTime] = useState("")
     const [recado, setRecado] = useState()
+    const [avatar, setAvatar] = useState(null)
 
     useEffect(() => {
         if(data.lastMessageDate > 0){
@@ -23,17 +24,21 @@ export default ({onClick, active, data, status, user}) => {
             minutes = minutes < 10? "0"+minutes : minutes;
             setTime(`${hours}:${minutes}`)
         }
+        db.collection("users").doc(data.with).onSnapshot(function(doc){
+            const data = doc.data()
+            const recado = data.recado
+            setRecado(recado)
+            console.log("data: ", data)
+            setAvatar(data.avatar)
+        })
     }, [data])
 
-    db.collection("users").doc(data.with).onSnapshot(function(doc){
-        const data = doc.data()
-        const recado = data.recado
-        setRecado(recado)
-    })
+
+
 
     return(
         <div className={`chatListItem ${active? "active": ""}`} onClick={onClick}>
-            <img className="chatListItem--avatar" src={data.image} alt="" />
+            <img className="chatListItem--avatar" src={avatar} alt="" />
             <div className="chatListItem--lines">
                 <div className="chatListItem--line">
                     <div className="chatListItem--name">{data.title}</div>

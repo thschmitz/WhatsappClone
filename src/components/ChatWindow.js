@@ -27,7 +27,7 @@ export default ({user, data, setShow}) => {
     const [listening, setListening] = useState(false)
     const [list, setList] = useState([])
     const [users, setUsers] = useState([])
-
+    const [avatar, setAvatar] = useState(null)
 
     const handleMicClick = () => {
         if(recognition !== null){
@@ -59,6 +59,7 @@ export default ({user, data, setShow}) => {
         if(body.current.scrollHeight > body.current.offsetHeight){
             body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
         }
+
     }, [list])
 
 
@@ -99,7 +100,7 @@ export default ({user, data, setShow}) => {
         <div className="chatWindow">
             <div className="chatWindow--header">
                 <div className="chatWindow--headerinfo">
-                    <img onClick={handleProfileOpen} className="chatWindow--avatar" src={data.image} alt="" />
+                    <img onClick={handleProfileOpen} className="chatWindow--avatar" src={avatar} alt="" />
                     <div onClick={handleProfileOpen} className="chatWindow--name">{data.title}</div>
                 </div>
 

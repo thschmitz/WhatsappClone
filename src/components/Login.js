@@ -92,7 +92,6 @@ export default ({onReceive, setUser}) => {
                 let newUser = {
                     id: id,
                     name: nome,
-                    avatar: null,
                     email: email,
                     criado: authUser.user.metadata.creationTime,
                 };
