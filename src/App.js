@@ -14,7 +14,14 @@ import Profile from "./components/Profile"
 import Popover from "@material-ui/core/Popover"
 import SelfAccount from "./components/SelfAccount"
 import Recado from "./components/Recado"
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
+import firebaseConfig from "./firebaseConfig"
+
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+const db = firebaseApp.firestore();
 export default () => {
   const [chatList, setChatList] = useState([])
   const [activeChat, setActiveChat] = useState({});
@@ -24,6 +31,7 @@ export default () => {
   const [showBars, setShowBars] = useState(false)
   const [showSelfAccount, setShowSelfAccount] = useState(false)
   const [showRecado, setShowRecado] = useState(false)
+  const [avatar, setAvatar] = useState(null)
   const ref = useRef(null)
 
 
@@ -31,7 +39,6 @@ export default () => {
     let newUser = {
       id: u.uid,
       name: u.displayName,
-      avatar: u.photoURL,
       email: u.email,
       criado: u.metadata.creationTime,
     };
@@ -41,6 +48,11 @@ export default () => {
 
   useEffect(() => {
     if(user !== null){
+      db.collection("users").doc(user.id).onSnapshot((doc) => {
+        const data = doc.data()
+        const avatar = data.avatar
+        setAvatar(avatar)
+      })
       let unsub = Api.onChatList(user.id, setChatList)
       return unsub;
     }
@@ -83,10 +95,10 @@ export default () => {
       <div className="sidebar">
 
         <NewChat chatlist={chatList} user={user} show={showNewChat} setShow={setShowNewChat} />
-        <SelfAccount user={user} data={activeChat} user={user} show={showSelfAccount} setShow={setShowSelfAccount}/>
+        <SelfAccount user={user} data={activeChat} setAvatar={setAvatar} avatar={avatar} show={showSelfAccount} setShow={setShowSelfAccount}/>
         <Recado user={user} data={activeChat} show={showRecado} setShow={setShowRecado} />
         <header>
-          <img className="header--avatar" onClick={handleOpenSelfAccount} src={user.avatar} alt="" />
+          <img className="header--avatar" onClick={handleOpenSelfAccount} src={avatar} alt="" />
           <div className="header--buttons">
             <div className="header--btn">
               <a><DonutLargeIcon onClick={handleOpenRecado} style={{color: "#919191"}} /></a>

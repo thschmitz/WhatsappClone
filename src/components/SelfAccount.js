@@ -14,10 +14,9 @@ const db = firebaseApp.firestore();
 
 
 
-export default ({ user, show, setShow}) => {
+export default ({ user, show, setShow, setAvatar, avatar}) => {
 
     const [recado, setRecado] = useState()
-    const [selectedImage, setSelectedImage] = useState()
     const [image, setImage] = useState("")
 
     const handleClose = () => {
@@ -46,6 +45,10 @@ export default ({ user, show, setShow}) => {
         file.onload = function(event) {
             console.log("entrou")
             document.getElementById("preview").src = event.target.result
+            db.collection("users").doc(user.id).set({
+                avatar: event.target.result
+            }, {merge:true})
+            setAvatar(event.target.result)
         }
 
         console.log(file.readAsDataURL(image))
@@ -63,7 +66,7 @@ export default ({ user, show, setShow}) => {
             <div className="profile--body">
                 <div className="informations">
                     <div className="image">
-                        <img id="preview" src={user.avatar} />
+                        <img id="preview" src={avatar} />
                         <h3>{recado}</h3>
                     </div>
                     <form className="avatar" onSubmit={uploadImage}>
