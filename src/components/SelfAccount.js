@@ -11,9 +11,6 @@ import firebaseConfig from "../firebaseConfig"
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 const db = firebaseApp.firestore();
 
-
-
-
 export default ({ user, show, setShow, setAvatar, avatar}) => {
 
     const [recado, setRecado] = useState()

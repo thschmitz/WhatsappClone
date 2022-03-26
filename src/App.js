@@ -84,10 +84,12 @@ export default () => {
 
 
   const handleOpenSelfAccount = () => {
+    handleCloseBars()
     setShowSelfAccount(true)
   }
 
   const handleOpenRecado = () => {
+    handleCloseBars()
     setShowRecado(true)
   }
 
@@ -119,8 +121,8 @@ export default () => {
                 horizontal: "right",
             }}
             >
-              <p>Status de outras pessoas</p>
-              <p>Conta</p>
+              <p onClick={handleOpenRecado}>Status de outras pessoas</p>
+              <p onClick={handleOpenSelfAccount}>Conta</p>
               <p onClick={deslogar}>Deslogar</p>
             </Popover>
             </div>
