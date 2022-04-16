@@ -17,7 +17,7 @@
 .messageText {
     font-size: 14px;
     margin: 5px 40px 5px 5px;
-
+    word-break: break-all
 }
 
 .messageDate {
@@ -28,3 +28,4 @@
     height: 15px;
     margin-top: -15px;
 }
+
