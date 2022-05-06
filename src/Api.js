@@ -44,17 +44,18 @@ export default {
     },
 
     addNewChat: async(user, user2, avatar) => {
+        var i = 0
 
-
+        for (i in db.collection("users").doc(user.id).chats){
+            if (db.collection("users").doc(user.id).chats[i].id === user2.id){
+                return;
+            }
+        }
 
         let newChat = await db.collection("chats").add({
             messages: [],
             users: [user.id, user2.id]
         })
-
-        console.log("a")
-        console.log(user, user2)
-        console.log("a")
 
         db.collection("users").doc(user.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({

@@ -132,7 +132,7 @@ export default () => {
         <div className="search">
           <div className="search--input">
             <SearchIcon fontSize="small" style={{color: "#919191"}} />
-            <input type="search" placeholder="Procurar ou comecar uma nova conversa" /> 
+            <input type="search" placeholder="Procurar ou comecar uma nova conversa" onChange={(e) => console.log(e.target.value)}/> 
           </div>
         </div>
 
