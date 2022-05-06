@@ -45,7 +45,7 @@ export default ({show, setShow, data, user}) => {
             <div className="profile--head">
                 <div onClick={handleClose} className="profile--backbutton">
                     <ArrowBackIcon style={{color: "#919191" }}/>
-                    <h3> Dados do contato</h3>
+                    <h3>Dados do contato</h3>
                 </div>
             </div>
             <div className="profile--body">

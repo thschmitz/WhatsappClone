@@ -100,7 +100,7 @@ export default ({onReceive, setUser}) => {
                 db.collection("users").doc(id).set({
                     name: nome,
                     email: email,
-                    avatar: null
+                    avatar: "https://sportbuzz.uol.com.br/media/_versions/douglascosta_82934045_116411013185365_8270789263511275541_n_widelg.jpg"
                     
                 })
     
